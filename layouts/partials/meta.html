@@ -1,0 +1,38 @@
+{{ $title := print .Title " | " .Site.Title }}
+{{ if .IsHome }}{{ $title = print .Title " | " .Site.Params.moto }}{{ end }}
+
+{{ $description := "" }}
+{{ if .Description }}{{ $description = .Description }}{{ else }}{{ $description = .Site.Params.moto }}{{ end }}
+
+{{ $image := .Site.Params.og_image | absURL }}
+{{ with .Params.featured_image }}
+{{ with resources.Get . }}
+  {{ $image = (.Resize "900x webp q95").RelPermalink | absURL }}
+{{ end }}
+{{ end }}
+
+<title itemprop="name">{{ $title }}</title>
+<meta itemprop="name" content="{{ $title }}" />
+
+<meta name="description" content="{{ .Site.Params.moto }}" />
+
+<meta name="twitter:title" content="{{ $title }}" />
+<meta name="twitter:description" content="{{ $description }}" />
+<meta name="twitter:image" content="{{ $image }}" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<meta name="application-name" content="{{ $title }}" />
+
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ $description }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:locale" content="en">
+<meta property="og:image" content="{{ $image }}" />
+<meta property="og:image:secure_url" content="{{ $image }}" />
+<meta property="og:type" content="{{if .IsHome }}website{{else}}article{{end}}" />
+
+<meta property="twitter:image" content="{{ $image }}" />
+<meta property="twitter:title" content="{{ $title }}" />
+<meta property="twitter:description" content="{{ $description }}" />
+<meta property="twitter:card" content="summary_large_image" />

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="{{ .Language.Lang }}">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      h1 {
+        font-size: 32px !important;
+        text-align: center;
+      }
+
+      body {
+	padding: 0;
+	margin: 0;
+      }
+
+      html {
+	scroll-behavior: smooth;
+      }
+
+      #feed {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: calc(10px + 100vw / 3);
+	height: 100vh;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid {
+      	grid-template-columns: [track-43566-start] 1fr [track-43566-end track-43567-start] 1fr [track-43567-end] !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-cssgrid__time-label {
+	display: none !important;
+      }
+
+      .sessionize-loader {
+	width: calc(2 * 100vw / 3 - 20px);
+	float: right;
+      }
+
+      .sessionize-loader ~ h1 {
+        padding: 12px 4px;
+      }
+
+      #sessionize.sessionize-wrapper .sz-day__title {
+        display: none;
+      }
+
+      html.dark #sessionize.sessionize-wrapper .sz-powered-by a,
+      html.dark #sessionize.sessionize-wrapper .sz-powered-by span,
+      html.dark #sessionize.sessionize-wrapper .sz-powered-by strong {
+        color: #FFFFFF88 !important;
+      }
+      html.dark #sessionize.sessionize-wrapper .sz-powered-by a:hover {
+        box-shadow: 0 1px 0 0 rgba(255,255,255,0.75);
+      }
+
+      #sessionize.sessionize-wrapper .sz-powered-by {
+	display: none !important;
+      }
+
+      .sz-session__card > .sz-session__title {
+        color: #fff !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-cssgrid__track-label {
+	justify-content: center;
+        border-top-right-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+        box-shadow: 0 4px 2px -2px #111827 !important;
+      }
+
+      @media (min-width: 600px) and (max-width: 767px) {
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-cssgrid__track-label {
+          top: 0px !important;
+        }
+      }
+
+      html.dark #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card,
+      html.dark #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card:hover {
+        box-shadow: 0 0 3px 1px #111827 !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card {
+        min-height: 7rem;
+        padding: 0.5rem;
+      }
+
+      @media (max-width: 599px) {
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__speakers {
+          min-width: 4rem;
+          max-width: 4rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: auto;
+        }
+
+        #sessionize.sessionize-wrapper .sz-session__speakers li {
+          margin: 0 !important;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid ul.sz-session__speakers a.speaker-with-avatar {
+          padding: 0 !important;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card {
+          display: flex !important;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum .sz-session__card {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum .sz-session__card .sz-session__speakers {
+          min-width: unset;
+          max-width: unset;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum .sz-session__card .sz-session__speakers > * {
+          margin: 0.5rem !important;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__title {
+          flex-grow: 1;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__meta-group {
+          display: flex !important;
+          min-width: 6rem;
+          max-width: 6rem;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__tags {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 0.75rem;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum .sz-session__card .sz-session__tags {
+          position: absolute;
+          top: 3rem;
+          left: calc(50% - 2.5em);
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__tags .session-status {
+          font-size: 0.5em;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__tags > .sz-tag {
+          display: none;
+        }
+      }
+
+      @media (min-width: 600px) {
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__title {
+          max-width: 80%;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__speakers {
+          position: absolute;
+          right: 0.5rem;
+          top: 0.5rem;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum .sz-session__card .sz-session__speakers {
+          position: unset;
+          right: unset;
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__tags {
+          position: absolute;
+          left: 6.5rem;
+          top: calc(1rem - 5px);
+        }
+
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum  .sz-session__card .sz-session__tags {
+          position: unset;
+          top: unset;
+          left: unset;
+        }
+      }
+
+      @media (min-width: 600px) and (max-width: 900px) {
+        #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__tags {
+          display: none;
+        }
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-session__card .sz-session__title {
+        overflow: unset !important;
+        max-height: unset !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--service .sz-session__card {
+        background: #111827 !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-room--43567 .sz-session__card {
+        background: #047857 !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid .sz-session--plenum.sz-room--43566 .sz-session__card {
+        background: #5b21b6 !important;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid ul.sz-session__speakers > li > a.speaker-with-avatar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0.5rem 0 0 0;
+      }
+
+      #sessionize.sessionize-wrapper .sz-cssgrid ul.sz-session__speakers > li > a.speaker-with-avatar > img {
+        height: 4rem;
+        border-radius: 50%;
+      }
+
+      #sessionize.sessionize-wrapper ul.sz-session__tags {
+        overflow: unset !important;
+      }
+
+      #sessionize.sessionize-wrapper li.session-status {
+        font-variant: small-caps;
+      }
+
+      #sessionize.sessionize-wrapper li.session-status.unconfirmed {
+        background: #ed474a;
+        cursor: help;
+      }
+
+      #sessionize.sessionize-wrapper li.session-status.unconfirmed::after {
+        content: '?';
+        position: relative;
+        display: inline-block;
+        top: -0.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="feed">
+      <!--
+      <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+      <div class="elfsight-app-05d0ec4f-0612-48e9-8c3f-b86f1ac9092b" data-elfsight-app-lazy></div>
+      -->
+      <iframe scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="" style="width: 100%; height: 8170px; display: block; flex-grow: 1;" title="Twitter Timeline" src="https://syndication.twitter.com/srv/timeline-profile/screen-name/buidler_fest?dnt=false&embedId=twitter-widget-0&features=eyJ0ZndfdGltZWxpbmVfbGlzdCI6eyJidWNrZXQiOltdLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X2ZvbGxvd2VyX2NvdW50X3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0ZndfdHdlZXRfZWRpdF9iYWNrZW5kIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd19yZWZzcmNfc2Vzc2lvbiI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfZm9zbnJfc29mdF9pbnRlcnZlbnRpb25zX2VuYWJsZWQiOnsiYnVja2V0Ijoib24iLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X21peGVkX21lZGlhXzE1ODk3Ijp7ImJ1Y2tldCI6InRyZWF0bWVudCIsInZlcnNpb24iOm51bGx9LCJ0ZndfZXhwZXJpbWVudHNfY29va2llX2V4cGlyYXRpb24iOnsiYnVja2V0IjoxMjA5NjAwLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X3Nob3dfYmlyZHdhdGNoX3Bpdm90c19lbmFibGVkIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd19kdXBsaWNhdGVfc2NyaWJlc190b19zZXR0aW5ncyI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfdXNlX3Byb2ZpbGVfaW1hZ2Vfc2hhcGVfZW5hYmxlZCI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfdmlkZW9faGxzX2R5bmFtaWNfbWFuaWZlc3RzXzE1MDgyIjp7ImJ1Y2tldCI6InRydWVfYml0cmF0ZSIsInZlcnNpb24iOm51bGx9LCJ0ZndfbGVnYWN5X3RpbWVsaW5lX3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0ZndfdHdlZXRfZWRpdF9mcm9udGVuZCI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9fQ%3D%3D&frame=false&hideBorder=false&hideFooter=false&hideHeader=false&hideScrollBar=false&lang=en&origin=https%3A%2F%2Fpublish.twitter.com%2F%23&sessionId=af0af8e53847f3f5818a9a07cdbf938d71a357a4&showHeader=true&showReplies=false&transparent=false&widgetsVersion=2615f7e52b7e0%3A1702314776716"></iframe>
+    </div>
+
+    <script type="text/javascript" src="https://sessionize.com/api/v2/{{ $.Site.Params.sessionize.id }}/view/GridSmart"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+	const feed = document.querySelector('#feed');
+	const lineup = document.querySelector('html');
+
+        const SPEED = 7;
+
+	let n = 0;
+	setInterval(() => {
+	  n += 1;
+	  if (n > 140) {
+	    feed.scrollTop += SPEED;
+	  }
+	  if (feed.scrollTop >= 2000) {
+	    n = 0;
+	    feed.scrollTop = 0;
+	  }
+	}, 100);
+
+	let m = 0;
+	setInterval(() => {
+	  m += 1;
+	  if (m > 14) {
+	    lineup.scrollTop += SPEED;
+	  }
+	  if (lineup.scrollTop >= lineup.scrollHeight - window.innerHeight - 50) {
+	    setTimeout(() => {
+	      m = 0;
+	      lineup.scrollTop = 0;
+	    } , 1400);
+	  }
+	}, 100);
+
+        const [grid, speakers, sessions] = await Promise.all([
+            await new Promise(resolve => {
+              function awaitGrid() {
+                const grid = document.querySelector('div.sz-cssgrid');
+                if (grid) { resolve(grid); } else { requestAnimationFrame(awaitGrid); }
+              }
+              awaitGrid();
+            }),
+            fetch('https://sessionize.com/api/v2/7cmzl9dq/view/Speakers')
+              .then(res => res.json())
+      	.then(res => res.reduce((m, { id, profilePicture }) => {
+      	  m.set(id, profilePicture); return m;
+      	}, new Map())),
+            fetch('https://sessionize.com/api/v2/7cmzl9dq/view/Sessions')
+      	.then(res => res.json())
+      	.then(res => res[0]?.sessions?.reduce((m, { id, isConfirmed }) => {
+      	  m.set(id, isConfirmed); return m;
+      	}, new Map())),
+        ]);
+
+        grid.querySelectorAll('.sz-session.sz-session--cssgrid').forEach(sessionEl => {
+          const session_id = sessionEl.getAttribute('data-sessionid');
+
+          const tags = sessionEl.querySelector('div.sz-session__card ul.sz-session__tags');
+          if (tags) {
+            let status = sessions.get(session_id) ? 'confirmed' : 'not yet confirmed';
+            let statusClass = sessions.get(session_id) ? 'confirmed' : 'unconfirmed';
+            if (session_id == '635104') {
+              status = 'confirmed';
+              statusClass = 'confirmed';
+            }
+
+            tags.innerHTML = `${tags.innerHTML} <li class="session-status ${statusClass}">${status}</li>`
+          }
+
+          setTimeout(() => {
+      	tippy('li.session-status.unconfirmed', {
+      	  content: "This session has been selected and approved but hasn't been confirmed yet by its speaker(s)."
+      	});
+
+      	tippy('li.session-status.confirmed', {
+      	  content: "This session has been selected, approved and confirmed!"
+      	});
+          }, 0);
+
+          sessionEl.querySelectorAll('div.sz-session__card ul.sz-session__speakers').forEach(speakersEl => {
+            speakersEl.querySelectorAll('li').forEach(li => {
+              const href = li.children[0];
+              const id = li.getAttribute('data-speakerid');
+              const avatar = speakers.get(id);
+              if (avatar) {
+                let name = href.innerText;
+                href.innerHTML = `<img src="${avatar}" loading=lazy /><span>${name}</span>`;
+                href.classList.add('speaker-with-avatar');
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

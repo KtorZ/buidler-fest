@@ -1,0 +1,19 @@
+{{define "main"}}
+<style>
+h2 {
+  margin: 2rem auto !important;
+  font-size: 3em !important;
+}
+
+p {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+</style>
+
+<main class="flex flex-col prose dark:prose-invert dark:text-white max-w-full">
+  {{.Content}}
+</main>
+
+{{end}}

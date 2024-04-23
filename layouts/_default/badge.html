@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="{{ .Language.Lang }}">
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1cm;
+  }
+
+  article {
+    width: 9.4cm;
+    height: 6.4cm;
+    border: 0.8cm solid var(--color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans';
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  article::after {
+    content: 'Cardano Buidler Fest 2024';
+    position: absolute;
+    bottom: -0.7cm;
+    font-weight: bold;
+    color: white;
+  }
+
+  article::before {
+    content: url('/Cardano-RGB_Logo-Icon-Blue.svg');
+    top: 0.5cm;
+    right: 0.5cm;
+    opacity: 0.5;
+    width: 15%;
+    display: block;
+    position: absolute;
+    z-index: -1;
+  }
+
+
+  article h1 {
+    font-size: 15pt;
+  }
+
+  article h2 {
+    font-size: 10pt;
+  }
+
+  article span.role {
+    background-color: var(--color);
+    padding: 0.25em 0.75em;
+    color: #fff;
+    border-radius: 0.25em;
+  }
+
+  article span.country {
+    position: absolute;
+    top: 0.5cm;
+    left: 0.5cm;
+  }
+
+  article span.country > img {
+    max-width: 0.75cm;
+  }
+
+
+  html, body {
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+  </style>
+</head>
+<body>
+{{ $colors := dict "organizer" "#badc58" "speaker" "#eb3b5a" "photograph" "#f2e421" "attendee" "#0133ad" }}
+{{ range .Params.badges }}
+<article style="--color: {{ index $colors .type }};">
+  <span class="role">{{ .type }}</span>
+  {{ with .flag }}<span class="country"><img src="https://flagcdn.com/48x36/{{ . }}.png" /></span>{{ end }}
+  <h1>{{ .name }}</h1>
+  {{ with .company }}<h2>{{ . }}</h2>{{ end }}
+</article>
+{{ end }}
+</body>
+</html>

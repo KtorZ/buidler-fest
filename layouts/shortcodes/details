@@ -1,0 +1,11 @@
+<style>
+details > summary > h2 {
+  cursor: pointer;
+}
+details > summary::marker {
+  font-size: 1.5em;
+}
+</style>
+<details><summary><h2 id="{{ .Get 0 | anchorize }}" class="capitalize inline-block cursor-pointer text-zinc-900 dark:text-indigo-400">{{ .Get 0 }}</h2></summary>
+{{ .Inner }}
+</details>

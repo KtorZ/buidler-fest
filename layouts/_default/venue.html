@@ -1,0 +1,92 @@
+{{ define "main" }}
+
+<style>
+#map {
+  width: 100%;
+  height: 50vh;
+}
+li > svg.icon,
+h1 > svg.icon,
+h2 > svg.icon,
+h3 > svg.icon {
+  margin-right: 0.5rem;
+  min-height: 24px;
+  min-width: 24px;
+}
+@media screen and (min-width: 62.5rem) {
+  #map {
+    height: auto;
+    min-height: 35rem;
+  }
+}
+</style>
+
+{{ with .Params.overview }}
+<article>
+  <header class="mb-4 bg-primary-600">
+    <span class="py-96">
+      <h1 class="py-16 text-5xl font-black text-center text-white capitalize">{{ .title }}</h1>
+    </span>
+  </header>
+  <div class="w-full max-w-5xl p-8 m-auto text-primary-800 dark:text-slate-50">
+    <p class="text-justify sm:text-left">{{ .description | markdownify }}</p>
+    <ul class="my-4">
+    {{ range .perks }}
+      <li class="flex ml-4 my-2">{{ partial "icon" "check-circle" }}{{ . | markdownify }}</li>
+    {{ end }}
+    </ul>
+  </div>
+</article>
+{{ end }}
+
+<section id="hero" class="grid grid-cols-2 grid-rows-2 sm:grid-cols-3 sm:grid-rows-none border-t border-solid border-slate-700">
+  {{ range $ix, $img := (.Resources.Match "hero/*.jpg") }}
+    {{ with $img.Fit "600x1200 webp photo" }}
+    {{ $uri := .RelPermalink }}
+      {{ if eq $ix 0 }}
+      <article class="bg-cover bg-no-repeat bg-center sm:hidden h-[25vh] sm:h-[35vw]" style="background-image: url({{ $uri }});" title="{{ $img.Name }}"></article>
+      {{ else }}
+        <article class="bg-cover bg-no-repeat bg-center h-[25vh] sm:h-[35vw]" style="background-image: url({{ $uri }});" title="{{ $img.Name }}"></article>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+</section>
+
+<section class="flex flex-col lg:flex-row-reverse items-center w-full bg-gray-900  border-b border-t border-solid border-slate-700">
+  <div class="w-full max-w-4xl p-8 text-slate-50">
+    <h2 class="flex items-center text-3xl dark:text-slate-50 font-bold">{{ partial "icon" "map" }} {{ .Params.where.title }}</h1>
+    <article class="my-8">
+      <h3 class="text-xl text-primary-200">{{ .Params.where.address.title }}</h3>
+      {{ .Params.where.address.content | markdownify }}
+    </article>
+    <article class="my-8">
+      <h3 class="text-xl text-primary-200">{{ .Params.where.how_to.title }}</h3>
+      <ul class="m-0 list-none">
+        {{ range .Params.where.how_to.instructions }}
+	<li class="my-2"><strong>{{ .method }}</strong>: {{ .details | markdownify }}</li>
+	{{ end }}
+      </ul>
+      <br/>
+      <p>{{ .Content | markdownify }}</p>
+    </article>
+  </div>
+  {{ partial "map" .Params.map }}
+</section>
+
+{{ with .Params.city }}
+<header class="w-full max-w-5xl p-8 text-primary-800 dark:text-slate-50 m-auto">
+  <h2 class="text-5xl text-center font-bold my-4">{{ .title }}</h1>
+  <p class="text-justify sm:text-left">{{ .description | markdownify }}</p>
+</header>
+{{ end }}
+
+<section id="hero" class="grid grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-none border-b border-t border-solid border-slate-700">
+  {{ range $ix, $img := (.Resources.Match "toulouse/*.jpg") }}
+    {{ with $img.Fit "600x1200 webp photo" }}
+    {{ $uri := .RelPermalink }}
+    <article class="bg-cover bg-no-repeat bg-center h-[20vh] sm:h-[25vw]" style="background-image: url({{ $uri }});" title="{{ $img.Name }}"></article>
+    {{ end }}
+  {{ end }}
+</section>
+
+{{ end }}

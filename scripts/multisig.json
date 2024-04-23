@@ -1,0 +1,11 @@
+{
+  "type": "all",
+  "scripts": [
+    { "type": "sig"
+    , "keyHash": "7095FAF3D48D582FBAE8B3F2E726670D7A35E2400C783D992BBDEFFB"
+    },
+    { "type": "sig"
+    , "keyHash": "DDBD569197D723BF74B7418D0991032F5A13D971E543D44EA1284B5E"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet@{{ .leaflet.version }} /dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@{{ .leaflet.version }}/dist/leaflet.js" async defer></script>
+<style>
+  .leaflet-marker-icon.leaflet-div-icon {
+    background: transparent !important;
+    border: none !important;
+  }
+  .leaflet-container a {
+    color: #4d8afe !important;
+  }
+
+  .icon.icon-map-pin {
+    color: #4d8afe;
+  }
+</style>
+<div id="map"></div>
+<script>
+  ;(function() {
+    window.addEventListener("load", () => {
+      const center = [{{ .coordinates.latitude }}, {{ .coordinates.longitude }}];
+      const map = new L.map("map", {
+        center: [center[0]+0.00025, center[1]],
+        zoom: 15,
+        touchZoom: "center",
+        zoomDelta: 2,
+        zoomControl: false,
+        attributionControl: false
+      });
+      map.addLayer(new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"));
+      L.control.zoom({
+        zoomInTitle: "Zoom in <double-click>",
+        zoomOutTitle: "Zoom out <shift + double-click>",
+      }).addTo(map);
+      L.control.attribution({
+	prefix: `<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/node/{{ .node_id }}">{{ .title }}</a>`
+      }).addTo(map);
+      map.scrollWheelZoom.disable();
+
+      /* Marker */
+      const popup = `{{ .popup }}`;
+      const icon = L.divIcon({
+	  html: `{{ partial "icon" "map-pin" }}`,
+          iconSize:     [24, 24],
+          iconAnchor:   [12, 24],
+          popupAnchor:  [0, -24],
+      });
+      const marker = new L.Marker(center, { icon });
+      marker.addTo(map);
+      marker.bindPopup(popup).openPopup();
+      const openPopup = new Debouncer(() => { marker.bindPopup(popup).openPopup() }, 150);
+      map.addEventListener('resize', () => {
+        marker.closePopup(popup);
+        openPopup();
+      });
+
+      /* Helpers */
+      function Debouncer(callback, time) {
+        let timer;
+        return () => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(callback, time);
+        }
+      }
+    });
+  }());
+</script>

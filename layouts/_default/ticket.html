@@ -1,0 +1,193 @@
+{{ $ticket_number := 999 }}
+{{ with resources.Match "tickets/*" }}{{ $ticket_number = add 1 (len .) }}{{ end }}
+<!DOCTYPE html>
+<html lang="{{ .Language.Lang }}">
+<head>
+  <title>0{{ $ticket_number }}_{{ .Params.details.fullname | lower | replaceRE ` ` "_" }}</title>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  html, body {
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+  }
+
+  body {
+    display: flex;
+    flex-direction: row;
+    height: 460px;
+    overflow: hidden;
+    font-family: 'Open Sans';
+    border: 2px solid #0133ad;
+  }
+
+  h1, h2 {
+    color: #0133ad;
+  }
+
+  h2 > svg {
+    position: relative;
+    top: 0.1rem;
+  }
+
+  main {
+    padding: 0.5cm;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 3;
+    gap: 0.5cm;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  aside:first-child {
+    overflow: hidden;
+    width: 264.5px;
+
+    & > img {
+      height: 7cm;
+      transform: rotate(-90deg);
+      position: relative;
+      top: 3.5cm;
+      left: calc(-3.5cm - 1px);
+      z-index: 1;
+    }
+
+    & > p.ticket-number {
+      box-sizing: border-box;
+      color: #FFFFFF;
+      display: inline-block;
+      font-size: 2em;
+      font-weight: bold;
+      height: 100%;
+      padding: 0.5cm;
+      position: relative;
+      text-align: center;
+      text-shadow: 2px 1px 1px #0133ad;
+      top: 3cm;
+      width: 100%;
+      z-index: 2;
+    }
+  }
+
+  article.who {
+    font-size: 1.8em;
+    color: #0133ad;
+    font-weight: bold;
+    & > span.company {
+      font-variant: small-caps;
+      font-size: 0.75em;
+      color: #141414;
+      display: block;
+      margin-top: -0.35em;
+    }
+  }
+  </style>
+  <script src="https://unpkg.com/qrcode@1.5.1/build/qrcode.js"></script>
+</head>
+<body>
+  <aside>
+    <img src="/og.png" />
+    <p class="ticket-number">#{{ $ticket_number }}</p>
+  </aside>
+  <main>
+    <h1>Cardano Buidler Fest #1</h1>
+
+    <section style="display: flex; justify-content: space-between; align-items: center;">
+    	<article id="qr"></article>
+
+	<section style="display: flex; flex-direction: column; gap: 1cm;" >
+	  <article style="font-size: 0.9em;">
+	    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Date</h2>
+	    23 → 24 April 2024
+	  </article>
+
+	  <article style="font-size: 0.9em;">
+	    <h2><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Location</h2>
+	    Hôtel Mercure Compans<br/>
+	    8 Esplanade Compans Caffarelli,<br/>
+	    31000 Toulouse, FR
+	  </article>
+	</section>
+   </section>
+
+    <article class="who">
+      {{ .Params.details.fullname }}
+      {{ with .Params.details.company }}
+      <br/><span class="company">{{ . }}</span>
+      {{ end }}
+    </article>
+  </main>
+
+  <script>
+    renderQR("{{ .Params.details.public_key_hash }}", "#0133ad", document.querySelector("#qr"));
+
+    async function renderQR(payload, color, el) {
+      const opts = {
+        width: 160,
+        height: 160,
+        errorCorrectionLevel: "Q",
+        color: {
+          light: "#FFFFFF",
+          dark: color,
+        },
+        type: "svg",
+      };
+
+      if (!payload) { return; }
+
+      QRCode.toString(payload, opts, async (err, raw) => {
+        if (err) { throw err; }
+
+        const qr = svgFromString(raw);
+        const canvas = qr.lastChild;
+
+        const dim = canvas.viewBox.baseVal.width;
+
+        const disc = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        disc.setAttribute("cx", "50%");
+        disc.setAttribute("cy", "50%");
+        disc.setAttribute("r", 0.16 * dim);
+        disc.setAttribute("fill", opts.color.light);
+        canvas.appendChild(disc);
+
+        const sz = 0.125 * dim;
+
+        const logo = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        logo.setAttribute("x", dim / 2 - sz);
+        logo.setAttribute("y", dim / 2 - 1.05*sz);
+        logo.setAttribute("width", 2 * sz);
+        logo.setAttribute("height", 2 * sz);
+        logo.setAttribute("href", await fetchSvg('/Cardano-RGB_Logo-Icon-Blue.svg'));
+        canvas.appendChild(logo);
+
+        el.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = svgDataURL(new XMLSerializer().serializeToString(qr));
+        el.appendChild(img);
+      });
+
+      function svgFromString(str) {
+        return new DOMParser().parseFromString(str, "image/svg+xml");
+      }
+
+      function svgDataURL(data) {
+        return `data:image/svg+xml;base64,${btoa(data)}`;
+      }
+
+      async function fetchSvg(url) {
+        const res = await fetch(url);
+        return svgDataURL(await res.text());
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,10 @@
+[build]
+  command = "yarn build"
+  publish = "public"
+
+[build.environment]
+  HUGO_VERSION = "0.125.6"
+
+[context.production]
+    [context.production.environment]
+        HUGO_ENV = "production"

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+AMT=300000000
+BUIDLER_ADDRESS=addr1z8aj8fucpe9rnwxv52u4htyhe7h39txjf9pvzrfw0sdlzkun36yuhgl049rxhhuckm2lpq3rmz5dcraddyl45d6xgvqqwdcx5c
+
+
+cat $2 | while  read fn ln email addr txin1 txin2 ; do
+  txfile=$fn-$ln.signed.cbor
+
+  cardano-cli conway transaction build \
+    --cardano-mode \
+    --change-address $BUIDLER_ADDRESS \
+    --mainnet \
+    --tx-in $txin1 \
+    --tx-in $txin2 \
+    --tx-in-script-file multisig.json \
+    --tx-out $addr+$AMT \
+    --metadata-json-file metadata.json \
+    --json-metadata-no-schema \
+    --out-file tx.cbor \
+
+  cardano-cli conway transaction sign \
+    --tx-file tx.cbor \
+    --signing-key-file $1 \
+    --out-file $txfile
+
+  cardano-cli conway transaction view \
+    --tx-file $txfile
+done

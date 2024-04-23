@@ -1,0 +1,73 @@
+{{define "main"}}
+<style>
+#map {
+  width: 100%;
+  height: 35vh;
+}
+li > svg.icon,
+h1 > svg.icon,
+h2 > svg.icon,
+h3 > svg.icon {
+  margin-right: 0.5rem;
+  min-height: 24px;
+  min-width: 24px;
+}
+@media screen and (min-width: 62.5rem) {
+  #map {
+    height: auto;
+    min-height: 25rem;
+  }
+}
+div.leaflet-popup-content {
+  width: 125px !important;
+}
+</style>
+<article>
+  <header class="mb-4 bg-primary-600">
+    <span class="py-96">
+      <h1 class="py-16 text-5xl font-black text-center text-white capitalize">
+        {{ .Title }}
+      </h1>
+      <aside class="p-4 flex justify-center items-center flex-col font-white gap-1">
+      {{ with .Params.subtitle }}{{ . | safeHTML }}{{ end }}
+      </aside>
+    </span>
+  </header>
+  <div class="max-w-7xl mx-auto mt-8 mb-2">
+    {{ if eq .Layout "feast" }}
+	<section id="hero" class="grid grid-cols-2 grid-rows-2 sm:grid-cols-4 sm:grid-rows-none">
+	  {{ range $ix, $img := (.Resources.Match "*.jpg") }}
+	    {{ with $img.Fit "600x1200 webp photo" }}
+	    {{ $uri := .RelPermalink }}
+	    <article class="bg-cover bg-no-repeat bg-center h-[25vh] sm:h-[25vw]" style="background-image: url({{ $uri }});" title="{{ $img.Name }}"></article>
+	    {{ end }}
+	  {{ end }}
+	</section>
+    {{ else }}
+      <div class="px-6">
+        {{ with .Params.featured_image }}
+        {{ with resources.Get . }}
+        {{ $small := (.Resize "400x webp").RelPermalink }}
+        {{ $medium := (.Resize "550x webp").RelPermalink }}
+        {{ $large := (.Resize "900x webp").RelPermalink }}
+        {{ $featuredimage := .RelPermalink }}
+        <img src="{{ $featuredimage }}" srcset="
+          {{- with $small -}}, {{.}} 400w{{- end -}}
+          {{- with $medium -}}, {{.}} 550w{{- end -}}
+          {{- with $large -}}, {{.}} 768w{{- end -}}
+          {{- with $featuredimage -}}, {{.}} 1100w{{- end -}}"
+             class="object-cover object-center max-h-[60vh] overflow-hidden rounded-lg shadow-lg ring-4 ring-zinc-300/40 dark:ring-gray-900/40 shadow-neutral-100/20 dark:shadow-neutral-800/40"
+             width="100%" alt="{{ .Params.title }}" />
+        {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  {{ end }}
+
+  <div class="max-w-7xl px-6 pt-6 pb-16 mx-auto prose dark:prose-invert dark:text-white">
+    {{.Content}}
+    {{ if eq .Layout "feast" }}{{ partial "map" .Params.map }}{{ end }}
+  </div>
+
+</article>
+{{end}}

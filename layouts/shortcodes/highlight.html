@@ -1,0 +1,35 @@
+<style>
+  .highlight {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 0.75rem solid #3034ec;
+    border-right: 0.75rem solid #3034ec;
+    margin: 1rem auto;
+    padding: 1rem;
+    max-width: 80%;
+    background: #818cf8;
+    color: #FFFFFF;
+  }
+  .highlight a {
+    text-decoration: none;
+    font-variant: small-caps;
+    display: inline-block;
+  }
+  .highlight a svg {
+    display: inline-block;
+    position: relative;
+    top: -0.1em;
+    width: 1em;
+    height: 1em;
+    margin-left: 0.1rem;
+  }
+</style>
+
+<div class="highlight">
+
+{{ .Inner }}
+<a class="px-4 py-2 text-sm font-semibold rounded-lg text-white bg-primary-600 hover:bg-primary-800 focus:outline-none focus:shadow-outline" target="_blank" href="{{ .Get "href" }}">{{ .Get "title" }} <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
+
+</div>

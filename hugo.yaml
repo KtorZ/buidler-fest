@@ -1,0 +1,212 @@
+baseURL: ''
+title: "Cardano Buidler Fest #1"
+languageCode: en-us
+DefaultContentLanguage: en
+enableEmoji: true
+enableGitInfo: true
+enableRobotsTXT: true
+canonifyURLs: true
+paginate: 9
+darkmode_js:
+  - assets/js/darkmode.js
+enableInlineShortcodes: true
+
+timeout: 180
+
+theme:
+- hugo-shortcode-gallery
+
+cascade:
+  - _target:
+      environment: '{production}'
+      path: '/ticket'
+    _build:
+      list: never
+      single: never
+      render: never
+
+markup:
+  goldmark:
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      linkifyProtocol: https
+      strikethrough: true
+      table: true
+      taskList: true
+      typographer:
+        apostrophe: '&rsquo;'
+        disable: false
+        ellipsis: '&hellip;'
+        emDash: '&mdash;'
+        enDash: '&ndash;'
+        leftAngleQuote: '&laquo;'
+        leftDoubleQuote: '&ldquo;'
+        leftSingleQuote: '&lsquo;'
+        rightAngleQuote: '&raquo;'
+        rightDoubleQuote: '&rdquo;'
+        rightSingleQuote: '&rsquo;'
+    parser:
+      attribute:
+        block: false
+        title: true
+      autoHeadingID: true
+      autoHeadingIDType: github
+      wrapStandAloneImageWithinParagraph: true
+    renderer:
+      hardWraps: false
+      unsafe: true
+      xhtml: false
+
+params:
+  og_image: /og.png
+  moto: "Buidl together"
+  description: "A 2-day event for tech-savvy Cardano builders to connect, showcase and share."
+  catch: "You enjoy starring at a black screen for hours and still can't figure out good variable names? Join us!"
+  disable_theme_toggle: false
+  disable_stay_uptodate: false
+
+  sessionize:
+    id: h0gltjdp
+
+  p1:
+    heading: "Day 1 :: Presentations"
+    image: "images/pages/day_1.webp"
+    content:
+      - text: "Focused on demos, project presentations and techniques. No keynotes, no vendor booths. Only builders living the moment and many opportunities for the Cardano community to showcase its amazing work."
+      - text: "Are you a developer who enjoys writing code? Want to learn or share some coding techniques? Want to discuss the latest smart-contract development trends? Do you prefer fiddling with infrastructure? Are you designing user interfaces for DApps?"
+      - text: |
+           This is the time. Whether you want to give a talk, run a workshop, or organize something lighter, our <a href="#cfp"><u>Call for Proposals</u></a> awaits you.
+  p2:
+    heading: "Day 2 :: Open Space"
+    image: "images/pages/day_2.webp"
+    content:
+      - text: |
+          Hands-on! We'll start the day with a big <a class="text-primary-400 dark:text-primary-50" target="_blank" href="https://www.agilealliance.org/glossary/open-space/">Open Space</a> and co-create the track for the day.<br/><br/>
+          Feel like hacking on something for a day?<br/><br/>
+          Or perhaps, contributing to some open-source project(s) of the ecosystem?<br/><br/>
+          This will be ours to decide and to collectively design the day. Three working spaces will be available to let the magic happen. Make sure to bring your gears.
+
+  p3:
+    heading: "Event Details"
+    icons:
+      - icon: calendar
+        text: 23 → 24 April
+      - icon: map-pin
+        text: Toulouse, FR
+      - icon: users
+        text: 110 seats
+    content:
+      - text: |
+          The event will be held in <strong>Toulouse, France</strong> on the <strong>23rd and 24th of April 2024</strong>. It is a paid event. The entrance fee includes an access to full 2 days of activities at the venue (including lunch & refreshments) and of course a t-shirt so that everyone can showcase their amazing tech conference collection to others during office hours.
+
+          <br/>
+
+          In addition, <u>[our sponsors](/about#sponsors)</u> kindly offer 3 nights of accommodation (22 → 24 April) at the venue with breakfast included to the **first 100 participants**.
+
+          <br/>
+
+          | Ticket Type | Price | Description                                                                                                                          |
+          | ---         | ---   | ---                                                                                                                                  |
+          | Blind       | 300 ₳ | Prior to any announcement of the full event schedule. You know you want to be there no matter what.                                  |
+          | Normal      | 400 ₳ | Once the call for speakers has ended<sup><a href="#normal-ticket-note">1</a></sup>, if you aren't (yet) sure it's worth your time ?! |
+
+          <p id="normal-ticket-note" class="text-right text-sm"><strong><sup>1</sup></strong> The call for speakers ends the 24th of February 2024, at 11:59 PM (UTC+1).</p>
+    links:
+      - text: Register now
+        url: "/register"
+
+  p4:
+    heading: "Latest news"
+    content:
+      - text: "Stay up-to-date with the event! We'll let you know how the preparations are going."
+
+  p5:
+    heading: "Call For Proposals"
+    content:
+      - text: |
+          You have some amazing news to share and want to be a speaker during the first day? Submit a proposal by clicking the button.
+    button:
+      - link: https://sessionize.com/cardano-buidler-fest/
+        text: I want to be a speaker
+menu:
+  main:
+    - identifier: cfp
+      name: Call for Proposals
+      url: https://sessionize.com/cardano-buidler-fest/
+      weight: 30
+    - identifier: agenda
+      name: Agenda
+      url: /agenda/
+      weight: 10
+    - identifier: venue
+      name: Venue
+      url: /venue/
+      weight: 20
+    - identifier: gallery
+      name: Gallery
+      url: /gallery/
+      weight: 30
+    - identifier: register
+      name: Register
+      url: /register/
+      weight: 999
+  footer:
+    - identifier: code-of-conduct
+      name: Code of conduct
+      url: /coc/
+      weight: 10
+    - identifier: terms-and-conditions
+      name: Terms & conditions
+      url: /terms-and-conditions/
+      weight: 30
+    - identifier: privacy-policy
+      name: Privacy policy
+      url: /privacy-policy/
+      weight: 40
+    - identifier: cookie-policy
+      name: Cookie policy
+      url: /cookie-policy/
+      weight: 50
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 99
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+taxonomies:
+  category: Categories
+  tag: Tags
+
+privacy:
+  disqus:
+    disable: false
+  googleAnalytics:
+    anonymizeIP: true
+    disable: true
+    respectDoNotTrack: false
+    useSessionStorage: false
+  instagram:
+    disable: true
+    simple: false
+  twitter:
+    disable: true
+    enableDNT: false
+    simple: false
+  vimeo:
+    disable: true
+    enableDNT: false
+    simple: false
+  youtube:
+    disable: true
+    privacyEnhanced: true
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.104.0"

@@ -1,0 +1,152 @@
+<form class="md:px-8 lg:px-16" action="/late-register?success" name="register" method="POST" data-netlify=true netlify-honeypot="pot">
+<fieldset class="border border-primary-500 dark:border-slate-100 p-2 md:p-4 lg:p-8 lg:pt-4 flex flex-col gap-2">
+  <legend id="legend" class="text-primary-500 dark:text-slate-100 px-2 md:px-4" style="font-variant: small-caps">Registration information</legend>
+
+  <label for="pot" class="block invisible" style="height: 0px; overflow: hidden;"><input id="pot" name="pot" /></label>
+
+  <label for="fullname" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your full name (firstname & lastname)</span>
+    <input id="fullname" class="w-full py-1 px-2 text-black" type="text" name="fullname" placeholder="Provide your full (legal) name" maxlength=255 required/>
+  </label>
+
+  <label for="email" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your email address</span>
+    <input id="email" class="w-full py-1 px-2 text-black" type="email" name="email" maxlength=255 required/>
+  </label>
+
+  <label for="country" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your country of residence</span>
+    <input id="country" class="w-full py-1 px-2 text-black" type="text" name="country" maxlength=100 required/>
+  </label>
+
+  <label for="public-key" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your ed25519 public key (or its blake2b-224 hash digest)</span>
+    <input id="public-key" class="w-full py-1 px-2 text-black" type="text" name="public-key" pattern="[0-9a-f]{56,64}" placeholder="An hex-encoded verification key or key hash. You must be able to sign with the corresponding signing key." required/>
+  </label>
+
+  <label class="block my-2">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Are you joining the <a target="_blank" href="/posts/2024-01-21-les-halles-de-la-cite">Buidler Feast</a> on the 1st evening?</span>
+    <input id="yes" class="py-1 px-2" type="radio" name="feast" value="yes" required/>
+    <label for="yes">Yes</label>
+    <input id="no"class="py-1 px-2" type="radio" name="feast" value="no" required/>
+    <label for="no">No</label>
+  </label>
+
+  <div class="block mt-2">
+    <style>
+      input#professional:checked ~ fieldset#company-details {
+        display: flex !important;
+      }
+    </style>
+    <span class="block text-sm font-medium text-slate-700 dark:text-slate-200">Registration type</span>
+    <input id="personal" type="radio" name="registration-type" value="personal" checked="checked"/>
+    <label for="personal" class="inline-block"> Personal</label>
+    <br/>
+    <input id="professional" type="radio" name="registration-type" value="professional" />
+    <label for="professional" class="inline-block"> Professional</label>
+
+    <fieldset id="company-details" class="border border-primary-500 dark:border-slate-100 p-2 md:p-4 lg:pt-2 hidden flex-col gap-2">
+      <legend class="text-primary-500 dark:text-slate-100 px-2 md:px-4" style="font-variant: small-caps">Company details</legend>
+      <label for="company-name" class="block">
+        <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your company's name</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+        <input id="company-name" class="w-full py-1 px-2 text-black" type="text" maxlength=255 name="company-name"/>
+      </label>
+
+      <label for="job-title" class="block">
+        <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your job title</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+        <input id="job-title" class="w-full py-1 px-2 text-black" type="text" maxlength=255 name="job-title"/>
+      </label>
+
+      <label for="vat" class="block">
+        <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your company's VAT number</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+        <input id="vat" class="w-full py-1 px-2 text-black" type="text" maxlength=100 name="vat"/>
+      </label>
+
+      <label for="company-address" class="block">
+        <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your company's address</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+	<textarea id="company-address" class="w-full py-1 px-2 text-black" maxlength=255 name="company-address"></textarea>
+      </label>
+    </fieldset>
+  </div>
+
+  <label for="phone" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your phone number</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+    <input id="phone" class="w-full py-1 px-2 text-black" type="tel" maxlength=100 name="phone"/>
+  </label>
+
+  <label for="github" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your GitHub handle</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+    <input id="github" class="w-full py-1 px-2 text-black" type="text" maxlength=100 name="github"/>
+  </label>
+
+  <label for="twitter" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your Twitter/X handle</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+    <input id="twitter" class="w-full py-1 px-2 text-black" type="text" maxlength=100 name="twitter"/>
+  </label>
+
+  <label for="size" class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your t-shirt size</span><sup class="text-lime-700 dark:text-lime-500">(optional)</sup>
+    <select id="size" name="size" class="w-full p-2 text-black">
+      <option value="unspecified" selected>-</option>
+      <option value="XS">XS</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+      <option value="2XL">2XL</option>
+      <option value="3XL">3XL</option>
+    </select>
+  </label>
+
+  <label class="block">
+    <span class="inline text-sm font-medium text-slate-700 dark:text-slate-200">Your best nerdy joke</span><sup class="text-lime-700 dark:text-lime-500">(optional, but please)</sup>
+    <textarea class="w-full py-1 px-2 text-black" maxlength=500 name="joke"></textarea>
+  </label>
+
+  <button id="submit" type="submit" class="flex m-auto mt-2 p-2 px-4 text-white bg-primary-200 rounded-md">Provide details &nbsp; {{ partial "icon" "upload-cloud" }}</button>
+
+  <div id="error-notification" class="p-4 bg-red-400 text-white hidden"></div>
+</fieldset>
+</form>
+
+
+<script>
+  document
+    .querySelector("form")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const body = new URLSearchParams(formData).toString();
+
+      for (const child of form.querySelectorAll('fieldset > *')) {
+        if (child.id !== "submit" && child.id !== "error-notification" && child.id !== "legend") {
+	  child.remove();
+	}
+      }
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      })
+      .then(res => {
+	if (!res.ok) {
+	  throw new Error(res.statusText);
+	}
+
+        const button = document.querySelector('#submit');
+	button.disabled = true;
+	button.innerHTML = `Step #1 completed &nbsp; {{ partial "icon" "check-circle" }}`;
+	button.classList.add('bg-green-500');
+	button.classList.remove('bg-primary-200');
+      })
+      .catch((e) => {
+        const notification = document.querySelector('#error-notification');
+        notification.innerHTML = `Unexpected error submitting the form. Please contact us at <a class="text-white" href="mailto:buidl@cardanofoundation.org">buidl@cardanofoundation.org</a> with the following details:<ul><li class="not-prose">${e}</li><li class="not-prose">${body}</li></ul>`;
+        notification.classList.remove("hidden");
+        notification.classList.add("inline-block");
+      })
+    });
+</script>

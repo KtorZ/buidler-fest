@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Missing path to signing key as 1st argument."
+  echo "Usage: "
+  echo "    ./build-tx <FILEPATH>"
+  echo ""
+  exit 1
+fi;
+
+AMT=716666667
+BUIDLER_ADDRESS=addr1z8aj8fucpe9rnwxv52u4htyhe7h39txjf9pvzrfw0sdlzkun36yuhgl049rxhhuckm2lpq3rmz5dcraddyl45d6xgvqqwdcx5c
+
+cardano-cli conway transaction build \
+  --cardano-mode \
+  --change-address $BUIDLER_ADDRESS \
+  --mainnet \
+  --tx-in  f60848667bf11228d23f7ae4070ec5ad7f06711c4d9c3a717a32cdf58734c0ba#0 \
+  --tx-in  f7877dba416a63692e554a403d669eff71f07d23531ae77d7510cc45cf91c6a0#0 \
+  --tx-in  f79bf8f64c402d95785f4deba8cc8085d47e758aa8f77c9a15d6eefcc4865585#0 \
+  --tx-in-script-file multisig.json \
+  --tx-out addr1qxssummxw7zskme6udfcuwlmmj7gwzq8pyxa3yde6kyuky5tekuwa340yzcnvep8nstc20akj4xwlldjx7gffunvgwpstadtv8+$AMT \
+  --metadata-json-file metadata.json \
+  --json-metadata-no-schema \
+  --out-file tx.cbor
+
+[[ $? -ne 0 ]] && exit 1
+
+cardano-cli conway transaction sign \
+  --tx-file tx.cbor \
+  --signing-key-file $1 \
+  --out-file tx.signed.cbor
+
+cardano-cli conway transaction view \
+  --tx-file tx.signed.cbor

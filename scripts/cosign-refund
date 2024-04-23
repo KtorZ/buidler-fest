@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BUIDLER_ADDRESS=addr1z8aj8fucpe9rnwxv52u4htyhe7h39txjf9pvzrfw0sdlzkun36yuhgl049rxhhuckm2lpq3rmz5dcraddyl45d6xgvqqwdcx5c
+
+# ogmios inspect transaction $(jq -r ".cborHex" $1) | sed "s/$BUIDLER_ADDRESS/\$buidler-fest/g" | jq
+
+while true; do
+    read -p "Continue and sign transaction? [Y/n] " yesno
+    case $yesno in
+        [Yy]* )
+	    cardano-cli conway transaction sign --tx-file $1 --signing-key-file $2 --out-file $1
+	    echo "Signed."
+	    exit
+        ;;
+        [Nn]* )
+	    echo "Signature cancelled."
+            exit
+        ;;
+        * ) echo "y,Y,n or N expected!";;
+    esac
+done

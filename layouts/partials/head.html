@@ -1,0 +1,42 @@
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32-dark.png" media="(prefers-color-scheme:dark)" id="dark-scheme-icon">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32-light.png" media="(prefers-color-scheme:light)" id="light-scheme-icon">
+<link rel="manifest" href="/favicon/site.webmanifest">
+<link rel="mask-icon" href="/favicon/favicon-32x32.png" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+{{ partial "meta" . }}
+<script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+    const lightSchemeIcon = document.querySelector('link#light-scheme-icon');
+    const darkSchemeIcon = document.querySelector('link#dark-scheme-icon');
+
+    const matcher = window.matchMedia('(prefers-color-scheme: dark)');
+    matcher.addListener(onFaviconUpdate);
+    onFaviconUpdate();
+
+    function onFaviconUpdate() {
+      if (matcher.matches) {
+        lightSchemeIcon.remove();
+        document.head.append(darkSchemeIcon);
+      } else {
+        document.head.append(lightSchemeIcon);
+        darkSchemeIcon.remove();
+      }
+    }
+</script>
+{{ $styles := resources.Get "/css/style.css" | postCSS }}
+{{ if .Site.IsServer }}
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
+{{ else }}
+{{ $styles := $styles | minify | fingerprint | resources.PostProcess }}
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" />
+{{ end }}

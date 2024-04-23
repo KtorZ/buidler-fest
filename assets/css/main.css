@@ -1,0 +1,126 @@
+/* assets */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+font-family: ui-sans-serif,
+system-ui,
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+Apple Color Emoji,
+Segoe UI Emoji,
+NotoColorEmoji,
+Segoe UI Symbol,
+Android Emoji,
+EmojiSymbols;
+
+/* Custom CSS */
+
+:root {}
+
+.table-wrapper table {
+  width: 100%;
+  border: 1px solid theme('colors.primary.500');
+}
+
+.table-wrapper table td {
+  padding: theme('padding.4');
+}
+
+.table-wrapper table td + td {
+  border-left: 1px solid theme('colors.primary.500');
+}
+
+.table-wrapper table tr + tr {
+  border-top: 1px solid theme('colors.primary.500');
+}
+
+.table-wrapper table thead {
+  background: theme('colors.primary.500');
+  color: theme('colors.white');
+  & th {
+    padding: theme('padding.2') theme('padding.4');
+  }
+}
+
+a[title="Register"]:after {
+  content: 'sold out';
+  display: inline-block;
+  position: relative;
+  top: -1.10em;
+  left: -0.75rem;
+  font-size: 0.75em;
+  color: theme('colors.red.300');
+  transform: rotate(10deg);
+  margin-right: -1rem;
+}
+
+aside#twitter-embeds {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+aside#twitter-embeds > article {
+    display: flex;
+    width: calc(50% - 2rem);
+}
+
+aside#twitter-embeds iframe {
+    border-radius: 0.75rem;
+    border-bottom: 1px solid #e1e6e9;
+    box-shadow: 0px 1px 2px #e1e6e9;
+    display: block;
+    flex-grow: 1;
+    height: 680px;
+    position: static;
+    visibility: visible;
+}
+
+aside.twitter-embeds {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: masonry;
+    justify-content: center;
+}
+
+@media (min-width: 700px) {
+    aside.twitter-embeds {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    aside.twitter-embeds {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+aside.twitter-embeds > article {
+    display: flex;
+    justify-content: center;
+}
+
+html[class~="dark"] aside#twitter-embeds iframe  {
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    aside#twitter-embeds {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    aside#twitter-embeds > article {
+        width: 100%;
+    }
+}
+
+/* Custom CSS end */

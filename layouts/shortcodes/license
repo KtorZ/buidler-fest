@@ -1,0 +1,1 @@
+<p class="italic flex justify-center gap-2">Licensed under <a class="flex gap-2" href="{{ .Get "src" }}" alt="{{ .Get "alt" }}">{{ .Get "alt" }}{{ .Inner }}</a></p>
